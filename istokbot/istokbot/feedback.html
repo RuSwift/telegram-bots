@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Обратная связь</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fdf5e6;
+            color: #333333;
+        }
+        header {
+            background-color: #8b4513;
+            color: #ffffff;
+            padding: 1em;
+            text-align: center;
+            border-bottom: 2px solid #cd853f;
+        }
+        .container {
+            margin: 1em auto;
+            max-width: 800px;
+            background-color: #fffaf0;
+            padding: 2em;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .form-group {
+            margin-bottom: 1.5em;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5em;
+            color: #8b4513;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 0.5em;
+            border-radius: 8px;
+            border: 1px solid #cd853f;
+            font-size: 1em;
+        }
+        textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 0.75em;
+            background-color: #8b4513;
+            color: #ffffff;
+            text-align: center;
+            border-radius: 8px;
+            border: none;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #704016;
+        }
+        .hidden {
+            display: none;
+        }
+        .message {
+            text-align: center;
+            padding: 2em;
+            background-color: #fffaf0;
+            border: 2px solid #cd853f;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            margin-top: 2em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Обратная связь</h1>
+    </header>
+    <div class="container" id="container">
+        <form id="feedback-form">
+            <div class="form-group">
+                <label for="name">Имя</label>
+                <input type="text" id="name" placeholder="Ваше имя">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Ваш email">
+            </div>
+            <div class="form-group">
+                <label for="message">Сообщение</label>
+                <textarea id="message" placeholder="Ваше сообщение"></textarea>
+            </div>
+            <button type="button" class="btn" onclick="submitFeedback()">Отправить</button>
+        </form>
+        <div id="feedback-message" class="hidden message">
+            <p>Спасибо за ваше сообщение! Мы свяжемся с вами в ближайшее время.</p>
+            <button class="btn" onclick="closeApp()">ОК</button>
+        </div>
+    </div>
+    <script>
+        function submitFeedback() {
+            // Здесь вы можете добавить код для отправки данных формы на сервер
+            document.getElementById('feedback-form').classList.add('hidden');
+            document.getElementById('feedback-message').classList.remove('hidden');
+        }
+
+        function closeApp() {
+            if (window.Telegram.WebApp) {
+                window.Telegram.WebApp.close();
+            }
+        }
+    </script>
+</body>
+</html>

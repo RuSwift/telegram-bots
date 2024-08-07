@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fdf5e6;
+            color: #333333;
+        }
+        header {
+            background-color: #8b4513;
+            color: #ffffff;
+            padding: 1em;
+            text-align: center;
+            border-bottom: 2px solid #cd853f;
+        }
+        .container {
+            margin: 1em auto;
+            max-width: 800px;
+            background-color: #fffaf0;
+            padding: 2em;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .faq-item {
+            margin-bottom: 1.5em;
+        }
+        .faq-item h2 {
+            margin-top: 0;
+            color: #8b4513;
+            cursor: pointer;
+        }
+        .faq-item p {
+            margin: 0.5em 0;
+            display: none;
+            color: #555;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 0.75em;
+            background-color: #8b4513;
+            color: #ffffff;
+            text-align: center;
+            border-radius: 8px;
+            border: none;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #704016;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>FAQ</h1>
+    </header>
+    <div class="container" id="container">
+        <div class="faq-item">
+            <h2 onclick="toggleAnswer(this)">Что такое ваш ресторан?</h2>
+            <p>Наш ресторан предлагает широкий ассортимент блюд из свежих и качественных ингредиентов, приготовленных нашими опытными поварами.</p>
+        </div>
+        <div class="faq-item">
+            <h2 onclick="toggleAnswer(this)">Как сделать заказ?</h2>
+            <p>Вы можете сделать заказ через наш веб-сайт или приложение. Выберите блюда из меню, добавьте их в корзину и оформите заказ, следуя инструкциям.</p>
+        </div>
+        <div class="faq-item">
+            <h2 onclick="toggleAnswer(this)">Какие у вас есть способы оплаты?</h2>
+            <p>Мы принимаем оплату наличными, банковскими картами и через онлайн-кошельки.</p>
+        </div>
+        <div class="faq-item">
+            <h2 onclick="toggleAnswer(this)">Как работает доставка?</h2>
+            <p>Мы доставляем заказы в течение 30-60 минут в зависимости от вашего местоположения. Вы также можете выбрать удобное время доставки при оформлении заказа.</p>
+        </div>
+        <div class="faq-item">
+            <h2 onclick="toggleAnswer(this)">Есть ли у вас скидки или акции?</h2>
+            <p>Да, мы регулярно проводим акции и предлагаем скидки на различные блюда. Следите за нашими новостями на веб-сайте и в приложении.</p>
+        </div>
+        <button class="btn" onclick="closeApp()">Закрыть</button>
+    </div>
+    <script>
+        function toggleAnswer(element) {
+            const answer = element.nextElementSibling;
+            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function closeApp() {
+            if (window.Telegram.WebApp) {
+                window.Telegram.WebApp.close();
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прием заказов</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fdf5e6;
+            color: #333333;
+        }
+        header {
+            background-color: #8b4513;
+            color: #ffffff;
+            padding: 1em;
+            text-align: center;
+            border-bottom: 2px solid #cd853f;
+        }
+        .container {
+            margin: 1em auto;
+            max-width: 800px;
+            background-color: #fffaf0;
+            padding: 2em;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .form-group {
+            margin-bottom: 1.5em;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5em;
+            color: #8b4513;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 0.5em;
+            border-radius: 8px;
+            border: 1px solid #cd853f;
+            font-size: 1em;
+        }
+        input[type="text"], input[type="tel"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+        input[type="text"] {
+            ime-mode: disabled;
+        }
+        input[type="text"]::placeholder {
+            font-size: 0.8em;
+        }
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        .order-summary {
+            margin-top: 2em;
+            padding: 1em;
+            background-color: #fffaf0;
+            border: 2px solid #cd853f;
+            border-radius: 8px;
+        }
+        .order-summary h3 {
+            margin-top: 0;
+            color: #8b4513;
+        }
+        .order-summary p {
+            margin: 0.5em 0;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 0.75em;
+            background-color: #8b4513;
+            color: #ffffff;
+            text-align: center;
+            border-radius: 8px;
+            border: none;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #704016;
+        }
+        .dish-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1em;
+        }
+        .dish-item button {
+            background-color: #8b4513;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 0.5em;
+            cursor: pointer;
+        }
+        .dish-item button:hover {
+            background-color: #704016;
+        }
+        .hidden {
+            display: none;
+        }
+        .message {
+            text-align: center;
+            padding: 2em;
+            background-color: #fffaf0;
+            border: 2px solid #cd853f;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Прием заказов</h1>
+    </header>
+    <div class="container" id="container">
+        <form id="order-form">
+            <div class="form-group">
+                <label for="dish">Выберите блюдо</label>
+                <select id="dish">
+                    <option value="bruschetta" data-price="250">Брускетта - 250₽</option>
+                    <option value="caesar_salad" data-price="400">Салат Цезарь - 400₽</option>
+                    <option value="ribeye_steak" data-price="1200">Стейк Рибай - 1200₽</option>
+                    <option value="pasta_carbonara" data-price="550">Паста Карбонара - 550₽</option>
+                    <option value="tiramisu" data-price="300">Тирамису - 300₽</option>
+                    <option value="cheesecake" data-price="350">Чизкейк - 350₽</option>
+                    <option value="cappuccino" data-price="150">Капучино - 150₽</option>
+                    <option value="orange_juice" data-price="200">Сок апельсиновый - 200₽</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="quantity">Количество</label>
+                <input type="number" id="quantity" min="1" value="1">
+            </div>
+            <button type="button" class="btn" onclick="addDish()">Добавить блюдо</button>
+            
+            <div class="form-group">
+                <label for="comments">Комментарии</label>
+                <textarea id="comments" placeholder="Ваши пожелания по заказу"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="name">Имя</label>
+                <input type="text" id="name" placeholder="Ваше имя">
+            </div>
+            <div class="form-group">
+                <label for="phone">Телефон</label>
+                <input type="tel" id="phone" placeholder="Ваш телефон">
+            </div>
+            <div class="form-group">
+                <label for="address">Адрес доставки</label>
+                <textarea id="address" placeholder="Ваш адрес"></textarea>
+            </div>
+            
+            <div class="order-summary">
+                <h3>Сводка заказа</h3>
+                <div id="order-items"></div>
+                <p><strong>Итого:</strong> <span id="order-total">0₽</span></p>
+            </div>
+            <button type="button" class="btn" onclick="submitOrder()">Оформить заказ</button>
+        </form>
+
+        <div id="payment-form" class="hidden" onclick="hideKeyboard(event)">
+            <h2>Оплата</h2>
+            <div class="form-group">
+                <label for="card-number">Номер карты</label>
+                <input type="tel" id="card-number" placeholder="Введите номер карты" pattern="[0-9]*" inputmode="numeric">
+            </div>
+            <div class="form-group">
+                <label for="card-expiry">Срок действия</label>
+                <input type="tel" id="card-expiry" placeholder="ММ/ГГ" pattern="[0-9]*" inputmode="numeric">
+            </div>
+            <div class="form-group">
+                <label for="card-cvc">CVC</label>
+                <input type="tel" id="card-cvc" placeholder="CVC" pattern="[0-9]*" inputmode="numeric">
+            </div>
+            <button type="button" class="btn" onclick="processPayment()">Оплатить</button>
+        </div>
+
+        <div id="confirmation-message" class="hidden message">
+            <p>Ваш заказ сформирован и оплачен. Ожидайте звонка оператора.</p>
+            <button type="button" class="btn" onclick="closeApp()">ОК</button>
+        </div>
+    </div>
+    <script>
+        // Инициализация Telegram WebApp SDK
+        if (window.Telegram.WebApp) {
+            window.Telegram.WebApp.ready();
+        }
+
+        let orderItems = [];
+        const dishSelect = document.getElementById('dish');
+        const quantityInput = document.getElementById('quantity');
+        const orderItemsContainer = document.getElementById('order-items');
+        const orderTotal = document.getElementById('order-total');
+        const orderForm = document.getElementById('order-form');
+        const paymentForm = document.getElementById('payment-form');
+        const confirmationMessage = document.getElementById('confirmation-message');
+
+        function addDish() {
+            const selectedDish = dishSelect.options[dishSelect.selectedIndex].text;
+            const quantity = quantityInput.value;
+            const price = parseInt(dishSelect.options[dishSelect.selectedIndex].dataset.price);
+
+            const dish = {
+                name: selectedDish.split(' - ')[0],
+                quantity: parseInt(quantity),
+                price: price,
+                total: price * quantity
+            };
+
+            orderItems.push(dish);
+            updateOrderSummary();
+        }
+
+        function updateOrderSummary() {
+            orderItemsContainer.innerHTML = '';
+            let total = 0;
+
+            orderItems.forEach((item, index) => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'dish-item';
+                itemElement.innerHTML = `
+                    <span>${item.name} x ${item.quantity} - ${item.total}₽</span>
+                    <button onclick="removeDish(${index})">Удалить</button>
+                `;
+                orderItemsContainer.appendChild(itemElement);
+                total += item.total;
+            });
+
+            orderTotal.textContent = `${total}₽`;
+        }
+
+        function removeDish(index) {
+            orderItems.splice(index, 1);
+            updateOrderSummary();
+        }
+
+        function submitOrder() {
+            orderForm.classList.add('hidden');
+            paymentForm.classList.remove('hidden');
+        }
+
+        function hideKeyboard(event) {
+            if (event.target.tagName !== 'INPUT' && event.target.tagName !== 'TEXTAREA') {
+                document.activeElement.blur();
+            }
+        }
+
+        function processPayment() {
+            paymentForm.classList.add('hidden');
+            confirmationMessage.classList.remove('hidden');
+        }
+
+        function closeApp() {
+            Telegram.WebApp.close();
+        }
+    </script>
+</body>
+</html>

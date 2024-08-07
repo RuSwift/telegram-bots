@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Меню Ресторана</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fdf5e6;
+            color: #333333;
+        }
+        header {
+            background-color: #8b4513;
+            color: #ffffff;
+            padding: 1em;
+            text-align: center;
+            border-bottom: 2px solid #cd853f;
+        }
+        .container {
+            margin: 1em auto;
+            max-width: 800px;
+            background-color: #fffaf0;
+            padding: 2em;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .category {
+            padding: 1em;
+            margin-bottom: 2em;
+            border-bottom: 2px solid #cd853f;
+        }
+        .category h2 {
+            margin-top: 0;
+            color: #8b4513;
+            font-size: 1.8em;
+            border-bottom: 2px solid #8b4513;
+            padding-bottom: 0.5em;
+        }
+        .dish {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1em 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .dish:last-child {
+            border-bottom: none;
+        }
+        .dish img {
+            max-width: 120px;
+            border-radius: 8px;
+            margin-right: 1em;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .dish-details {
+            flex: 1;
+        }
+        .dish-details h3 {
+            margin: 0 0 0.5em;
+            color: #8b4513;
+            font-size: 1.5em;
+        }
+        .dish-details p {
+            margin: 0.5em 0;
+            font-size: 1.1em;
+        }
+        .dish-price {
+            font-weight: bold;
+            color: #8b4513;
+            font-size: 1.3em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Меню Ресторана</h1>
+    </header>
+    <div class="container">
+        <!-- Закуски -->
+        <div class="category">
+            <h2>Закуски</h2>
+            <div class="dish">
+                <img src="https://nzhlv.fun/istokbot/foto/bru.webp" alt="Брускетта">
+                <div class="dish-details">
+                    <h3>Брускетта</h3>
+                    <p>Традиционная итальянская закуска с томатами и базиликом.</p>
+                </div>
+                <div class="dish-price">250₽</div>
+            </div>
+            <div class="dish">
+                <img src="https://nzhlv.fun/istokbot/foto/zes.webp" alt="Салат Цезарь">
+                <div class="dish-details">
+                    <h3>Салат Цезарь</h3>
+                    <p>Классический салат с курицей, сухариками и пармезаном.</p>
+                </div>
+                <div class="dish-price">400₽</div>
+            </div>
+        </div>
+
+        <!-- Основные блюда -->
+        <div class="category">
+            <h2>Основные блюда</h2>
+            <div class="dish">
+                <img src="https://nzhlv.fun/istokbot/foto/rib.webp" alt="Стейк Рибай">
+                <div class="dish-details">
+                    <h3>Стейк Рибай</h3>
+                    <p>Сочный стейк из мраморной говядины с соусом.</p>
+                </div>
+                <div class="dish-price">1200₽</div>
+            </div>
+            <div class="dish">
+                <img src="https://nzhlv.fun/istokbot/foto/car.webp" alt="Паста Карбонара">
+                <div class="dish-details">
+                    <h3>Паста Карбонара</h3>
+                    <p>Кремовая паста с беконом и пармезаном.</p>
+                </div>
+                <div class="dish-price">550₽</div>
+            </div>
+        </div>
+
+        <!-- Десерты -->
+        <div class="category">
+            <h2>Десерты</h2>
+            <div class="dish">
+                <img src="https://nzhlv.fun/istokbot/foto/tir.webp" alt="Тирамису">
+                <div class="dish-details">
+                    <h3>Тирамису</h3>
+                    <p>Классический итальянский десерт с кофе и маскарпоне.</p>
+                </div>
+                <div class="dish-price">300₽</div>
+            </div>
+            <div class="dish">
+                <img src="https://nzhlv.fun/istokbot/foto/chis.webp" alt="Чизкейк">
+                <div class="dish-details">
+                    <h3>Чизкейк</h3>
+                    <p>Нежный чизкейк с ягодным соусом.</p>
+                </div>
+                <div class="dish-price">350₽</div>
+            </div>
+        </div>
+
+        <!-- Напитки -->
+        <div class="category">
+            <h2>Напитки</h2>
+            <div class="dish">
+                <img src="https://nzhlv.fun/istokbot/foto/cap.webp" alt="Капучино">
+                <div class="dish-details">
+                    <h3>Капучино</h3>
+                    <p>Классический итальянский кофе с молочной пенкой.</p>
+                </div>
+                <div class="dish-price">150₽</div>
+            </div>
+            <div class="dish">
+                <img src="https://nzhlv.fun/istokbot/foto/orangejuce.webp" alt="Сок апельсиновый">
+                <div class="dish-details">
+                    <h3>Сок апельсиновый</h3>
+                    <p>Свежевыжатый апельсиновый сок.</p>
+                </div>
+                <div class="dish-price">200₽</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
